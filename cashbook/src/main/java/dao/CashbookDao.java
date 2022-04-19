@@ -26,7 +26,8 @@ public class CashbookDao {
 		String sql="select cashbook_no cashbookNo,"
 				+ "			Day(cash_date) day,"
 				+ "			kind,"
-				+ "			cash"
+				+ "			cash,"
+				+ "         memo"
 				+ "			from cashbook"
 				+ "			where Year(cash_date)= ? and month(cash_date)=?"
 				+ "			order by day(cash_date) asc";
@@ -43,6 +44,7 @@ public class CashbookDao {
 				map.put("day", rs.getInt("day"));
 				map.put("kind", rs.getString("kind"));
 	            map.put("cash", rs.getInt("cash"));
+	            map.put("memo",rs.getString("memo"));
 	            list.add(map);
 			}
 		} catch (Exception e) {
