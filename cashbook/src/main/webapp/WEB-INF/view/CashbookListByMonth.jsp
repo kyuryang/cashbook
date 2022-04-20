@@ -30,6 +30,8 @@
       System.out.println(endDay +" <- endDay CaahBookListByMonth.jsp");
       System.out.println(endBlank +" <- endBlank CaahBookListByMonth.jsp");
       System.out.println(totalTd +" <- totalTd CaahBookListByMonth.jsp");
+      
+    
    %>
    <h2><%=y%>년 <%=m%>월</h2>
    <div>
@@ -71,17 +73,20 @@
 				}
          %>                <td class="<%=c%>">
                         <%=i-startBlank%>
-                        <a href="<%=request.getContextPath()%>/InsertCashBookController?y=<%=y%>&m=<%=m%>&d=<%=i-startBlank%>" class="btn btn-light">입력</a>
+                        <a href="<%=request.getContextPath()%>/InsertCashbookController?y=<%=y%>&m=<%=m%>&d=<%=i-startBlank%>" class="btn btn-light">입력</a>
   						<div>
   							<!-- 해당 날짜의 cashbook목록 출력 -->
   							<%
   								for(Map map : list){
   									if((Integer)map.get("day") == (i-startBlank)){
+  		
   							%>			
   									<div>
+  										<a href="<%=request.getContextPath() %>/CashbookOneController?cashbookNo=<%=map.get("cashbookNo")%>">
   										[<%=map.get("kind") %>]
   										<%=map.get("cash") %>원
   										<%=map.get("memo") %>...
+  										</a>
   									</div>
   							<% 
   										
@@ -102,6 +107,9 @@
          <%         
                }
             }
+         %>
+         
+         <%
          %>
    	   </tr>
       </tbody>
