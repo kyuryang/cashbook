@@ -33,6 +33,10 @@
       
     
    %>
+   <!-- 태그등록 -->
+   <div>
+   		<a href=""></a>
+   </div>
    <h2><%=y%>년 <%=m%>월</h2>
    <div>
       <a href="<%=request.getContextPath()%>/CashbookListByMonthController?y=<%=y%>&m=<%=m-1%>">이전달</a>
@@ -77,7 +81,7 @@
   						<div>
   							<!-- 해당 날짜의 cashbook목록 출력 -->
   							<%
-  								for(Map map : list){
+  								for(Map<String,Object> map : list){
   									if((Integer)map.get("day") == (i-startBlank)){
   		
   							%>			
