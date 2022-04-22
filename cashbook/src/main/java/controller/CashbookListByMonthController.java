@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.CashbookDao;
 
@@ -18,7 +19,27 @@ import dao.CashbookDao;
  */
 @WebServlet("/CashbookListByMonthController")
 public class CashbookListByMonthController extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      
+      HttpSession session = request.getSession();
+      String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+      if(sessionMemberId == null) {
+         // 로그인 되지 않은 경우
+         response.sendRedirect(request.getContextPath()+"/LoginController");
+         return;
+      }
+
+		
+//		HttpSession session = request.getSession();
+//		String sessionMember = (String)session.getAttribute("sessionMeberId");
+//		if(sessionMember ==null) {												//null이면 로그인 화면으로 이동
+//			response.sendRedirect(request.getContextPath()+"/LoginController");
+//			return;  										
+//		}
+
+
+		
+		
 		
 		//1)월별 cashbook 리스트 요청 분석
 			Calendar today= Calendar.getInstance();

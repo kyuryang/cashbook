@@ -33,9 +33,13 @@
       
     
    %>
+    <div>
+    	<%=session.getAttribute("sessionMemberId") %>님 반갑습니다.
+   		<a href="<%=request.getContextPath()%>/LogoutController">로그아웃</a>
+   </div>
    <!-- 태그등록 -->
    <div>
-   		<a href=""></a>
+   		<a href="<%=request.getContextPath()%>/TagController">tags</a>
    </div>
    <h2><%=y%>년 <%=m%>월</h2>
    <div>
