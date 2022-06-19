@@ -4,8 +4,6 @@ public class Member {
 	private String memberId;
 	private String memberPw;
 	private String createDate;
-	
-	
 	public String getMemberId() {
 		return memberId;
 	}
@@ -24,9 +22,11 @@ public class Member {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", createDate=" + createDate + "]";
 	}
+	
+	
+
 }

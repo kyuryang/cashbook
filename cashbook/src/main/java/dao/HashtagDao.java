@@ -50,7 +50,45 @@ public class HashtagDao {
 		      }
 		      return list;
 		   }
-	   public List<Map<String,Object>> selectCashbookListByTag(String tag) {					//태그별 캐쉬목록
+	   public int countByTag(String tag) {
+		   Connection conn = null;
+		      PreparedStatement stmt = null;
+		      ResultSet rs = null;
+		      int cnt=0;
+		      try {
+		         /*
+		           SELECT t.tag,c.kind,c.cash,c.cash_date cashDate,c.memo
+					FROM hashtag t INNER JOIN cashbook c ON t.cashbook_no=c.cashbook_no
+					WHERE t.tag='?'
+		          */
+		         Class.forName("org.mariadb.jdbc.Driver");
+		         conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+		         String sql = "  SELECT count(*) cnt"
+		         		+ "					FROM hashtag t INNER JOIN cashbook c ON t.cashbook_no=c.cashbook_no"
+		         		+ "					WHERE t.tag=? order by c.cash_Date ";
+
+		         
+		         stmt = conn.prepareStatement(sql);
+		         stmt.setString(1,tag);
+		         rs = stmt.executeQuery();
+
+		         while(rs.next()) {
+		        	 cnt = rs.getInt("cnt");
+		         }
+		      } catch (Exception e) {
+		         e.printStackTrace();
+		      } finally {
+		         try {
+		            conn.close();
+		         } catch (SQLException e) {
+		            e.printStackTrace();
+		         }
+		      }
+		      return cnt;
+		   }
+	   
+	   
+	   public List<Map<String,Object>> selectCashbookListByTag(String tag,int beginRow,int rowPerPage) {					//태그별 캐쉬목록
 		      List<Map<String,Object>> list = new ArrayList<>();
 		      Connection conn = null;
 		      PreparedStatement stmt = null;
@@ -65,10 +103,13 @@ public class HashtagDao {
 		         conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
 		         String sql = "  SELECT t.tag,c.kind,c.cash,c.cash_date cashDate,c.memo"
 		         		+ "					FROM hashtag t INNER JOIN cashbook c ON t.cashbook_no=c.cashbook_no"
-		         		+ "					WHERE t.tag=? order by c.cash_Date";
+		         		+ "					WHERE t.tag=? order by c.cash_Date desc"
+		         		+ "					limit ?,?";
 		         
 		         stmt = conn.prepareStatement(sql);
 		         stmt.setString(1,tag);
+		         stmt.setInt(2, beginRow);
+		         stmt.setInt(3, rowPerPage);
 		         rs = stmt.executeQuery();
 
 		         while(rs.next()) {

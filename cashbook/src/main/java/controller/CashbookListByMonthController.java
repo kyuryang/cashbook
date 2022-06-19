@@ -37,10 +37,6 @@ public class CashbookListByMonthController extends HttpServlet {
 //			return;  										
 //		}
 
-
-		
-		
-		
 		//1)월별 cashbook 리스트 요청 분석
 			Calendar today= Calendar.getInstance();
 			int y=today.get(Calendar.YEAR);
@@ -85,7 +81,7 @@ public class CashbookListByMonthController extends HttpServlet {
 		      // startBlank    일0, 월1, ... 토6
 		      // 1)
 		      int startBlank = dayOfWeek - 1;
-		      // 마지막 날짜는 자바 달력api를 이요하여 구하자
+		      // 마지막 날짜는 자바 달력api를 이용하여 구하자
 		      // 2)
 		      int endDay = firstDay.getActualMaximum(Calendar.DATE);// firstDay달의 제일 큰수자 -> 마지막날짜
 		      // strartBlank와 endDay를 합의 결과에 endBlank를 더해서 7의 배수가 되도록

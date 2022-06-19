@@ -12,7 +12,7 @@ public class CashbookDao {
 	public void deleteCashbook(int cashbookNo) {
 		Connection conn = null;
 		PreparedStatement stmt= null;
-
+		PreparedStatement stmt2 = null;	
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -26,7 +26,7 @@ public class CashbookDao {
 			
 			
 			String sql2="delete from hashtag where cashbook_no=?";
-			PreparedStatement stmt2 = null;											//hashtag 삭제 
+													//hashtag 삭제 
 			stmt2=conn.prepareStatement(sql2);
 			stmt2.setInt(1, cashbookNo);
 			
@@ -196,11 +196,43 @@ public class CashbookDao {
 				stmt.close();
 				rs.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
 		}
 		return list;
+	}
+	
+	public int updateCashbook(int cashbookNo){
+			Connection conn=null;
+			PreparedStatement stmt =null;
+			int row=0;
+			String sql="update cashbook"
+					+ " set cash=?,kind=?,memo=?  where cashbook_no = ?  ";
+			try {
+				Class.forName("org.mariadb.jdbc.Driver");
+				conn=DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+				stmt =conn.prepareStatement(sql);
+				row=stmt.executeUpdate();
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+					stmt.close();
+
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
+				
+			}
+		 
+		
+		return row;
+		
 	}
 }

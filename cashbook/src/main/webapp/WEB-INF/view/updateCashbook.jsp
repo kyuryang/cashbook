@@ -11,6 +11,7 @@
 
 	}
 
+	String[] knd = {"수입","지출'"};
 %>
 <!DOCTYPE html>
 <html>
@@ -29,6 +30,7 @@
 </head>
 <body class="container">
 	<h1>cashbook상세보기</h1>
+	<form method="post" action="<%=request.getContextPath()%>/UpdateCashbookController">
 		  <table class="table table-bordered table-striped">
 			<% for(Cashbook c : list){ %>
 			<tr>
@@ -37,11 +39,21 @@
 			</tr>
 			<tr>
 				<td>cash</td>
-				<td><input type="number" name="cash" value="<%=c.getCash()%>" readonly="readonly"></td>
+				<td><input type="number" name="cash" value="<%=c.getCash()%>" ></td>
 			</tr>
 			<tr>
 				<td>kind</td>
-				<td><%=c.getKind()%></td>
+				<td>
+				<% 
+					for(int i =0; i<knd.length; i++){
+				%>
+				
+					 <input type = "radio" name = "kind" value = "<%=knd[i]%>">지출
+	       		
+					<% 
+						}
+					%>
+				</td>
 			</tr>
 			<tr>
 				<td>cashDate</td>
@@ -49,14 +61,18 @@
 			</tr>
 			<tr>
 				<td>memo</td>
-				<td><%=c.getMemo() %> 
+				
+				<td><textArea name="memo" ><%=c.getMemo() %></textArea></td>
 			</tr>
 			<%} %>
+			
 		</table>
 		<ul class="pagination justify-content-center ">
-			<li><a  href="<%=request.getContextPath() %>/UpdateCashbookController?cashbookNo=<%=list.get(0).getCashbookNo()%>"><button type="button" class="btn btn-light">수정</button></a></li>
-			<li><a  href="<%=request.getContextPath() %>/DeleteCashbookController?cashbookNo=<%=list.get(0).getCashbookNo()%>"><button type="button" class="btn btn-light">삭제</button></a></li>
-			<li><a  href="<%=request.getContextPath() %>/CashbookListByMonthController"><button type="button" class="btn btn-light">돌아가기</button></a></li>
+			<li><button type="submit" class="btn btn-light">수정</button></li>
+			<li><a  href="<%=request.getContextPath() %>/CashbookOneController?cashbookNo=<%=list.get(0).getCashbookNo()%>"><button type="button" class="btn btn-light">돌아가기</button></a></li>
 		</ul>
+		
+		</form>
+		
 </body>
 </html>

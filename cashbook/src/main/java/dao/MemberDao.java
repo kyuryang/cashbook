@@ -44,12 +44,23 @@ public class MemberDao {
 		
 	}
 	//회원수정
-	public String updateMember(Member member) {					//회원 수정
-		
-		String sql="update member set ";
-//		UPDATE stats SET cnt = cnt+1 WHERE DAY = CURDATE()
-		
-		return "";
+	public int updateMemberPw(Member member) {					//회원 비밀번호 수정
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		int row =0;
+		String sql="update member set member_pw=password(?) where member_id=?";
+		try {
+			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			stmt=conn.prepareStatement(sql);
+			stmt.setString(1, member.getMemberPw());
+			stmt.setString(2, member.getMemberId());
+			row=stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return row;
 	}
 	//회원탈퇴
 	public void deleteMemer(Member member) {
@@ -90,7 +101,7 @@ public class MemberDao {
 		      String sql = "SELECT member_id memberId FROM member WHERE member_id=? AND member_pw=PASSWORD(?)";
 
 		      try {
-		         Class.forName("org.mariadb.jdbc.Driver");
+
 		         conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
 		         stmt = conn.prepareStatement(sql);
 		         stmt.setString(1, member.getMemberId());
@@ -112,5 +123,40 @@ public class MemberDao {
 		      return memberId;
 		   }
 	   
-	   
+	   public Member selectMemberOne(String memberId) {
+		   Connection conn = null;
+		   PreparedStatement stmt = null;
+		   ResultSet rs = null;
+		   Member member = new Member();
+		   member.setMemberId(memberId);
+		   
+		   System.out.println(member + "<--memberDao.selectMemberOne");
+		   
+		   String sql = "select member_id memberId, member_pw memberPw, create_date createDate from member where member_id=?";
+
+		      try {
+		    	  conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+		         stmt = conn.prepareStatement(sql);
+		         stmt.setString(1, member.getMemberId());
+		         rs = stmt.executeQuery();
+		         if(rs.next()) {
+		        	 
+		            member.setMemberPw(rs.getString("memberPw"));
+		            member.setCreateDate(rs.getString("createDate"));
+		            
+		            }
+		      } catch (Exception e) {
+		         e.printStackTrace();
+		      } finally {
+		         try {
+		            conn.close();
+		            rs.close();
+		            stmt.close();
+		         } catch (SQLException e) {
+		            e.printStackTrace();
+		         }
+		      }
+		      System.out.println(member + "<--memberDao.selectMemberOne");
+		      return member;
+		   }
 }

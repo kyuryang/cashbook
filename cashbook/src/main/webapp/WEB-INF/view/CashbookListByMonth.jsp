@@ -7,6 +7,26 @@
 <meta charset="UTF-8">
 <title>CashbookListByMonth</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<style>
+	#footer {
+		clear:both;
+		display:inline;
+
+		float:right;
+		}
+	#bt{
+		display:inline;
+		float:center;
+		
+
+		}
+.lef{
+	display:inline;
+	align:right;
+	text-align:right;
+	position:relative;
+}
+</style>
 </head>
 <body class="container">
 <%
@@ -33,19 +53,25 @@
       
     
    %>
-    <div>
-    	<%=session.getAttribute("sessionMemberId") %>님 반갑습니다.
-   		<a href="<%=request.getContextPath()%>/LogoutController">로그아웃</a>
+   
+  	<h1 style="display:inline; align:right;">cashbook (2021.05~2022.05)</h1> 
+  	<div id="footer">
+    	<a  href ="<%=request.getContextPath()%>/SelectMemberOneController?memberId=${sessionMemberId}"><%=session.getAttribute("sessionMemberId") %></a>님 반갑습니다.
+   		<a  href="<%=request.getContextPath()%>/LogoutController">로그아웃</a>
    </div>
    <!-- 태그등록 -->
-   <div>
-   		<a href="<%=request.getContextPath()%>/TagController">tags</a>
-   </div>
-   <h2><%=y%>년 <%=m%>월</h2>
-   <div>
-      <a href="<%=request.getContextPath()%>/CashbookListByMonthController?y=<%=y%>&m=<%=m-1%>">이전달</a>
-      <a href="<%=request.getContextPath()%>/CashbookListByMonthController?y=<%=y%>&m=<%=m+1%>">다음달</a>
-   </div>
+
+   <h2></h2>
+   	<h2  class="lef"	><%=y%>년 <%=m%>월 </h2>
+	<div  id="footer" >
+	
+		<a  href="<%=request.getContextPath()%>/CashbookListByMonthController?y=<%=y%>&m=<%=m-1%>"><button type="button" class="btn btn-light">이전달</button></a> 
+     	<a  href="<%=request.getContextPath()%>/CashbookListByMonthController?y=<%=y%>&m=<%=m+1%>"><button type="button" class="btn btn-light">다음달</button></a>
+     </div>
+     <div id="bt" > 
+		<a href="<%=request.getContextPath()%>/TagController"><button type="button" class="btn btn-light">tags 별 통계</button></a>
+	</div>
+     
    <!-- 
       1) 이번날 1일의 요일 firstDayYoil -> startBlank -> 일 0, 월 1, 화 2, ... 토 6
       2) 이번달 마지막날짜 endDay
@@ -123,6 +149,5 @@
       </tbody>
       <tr>
    </table>
-
 </body>
 </html>

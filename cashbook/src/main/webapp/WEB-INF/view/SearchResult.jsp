@@ -7,13 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 </head>
 <%
 List<Map<String, Object>> list = (List<Map<String, Object>>)request.getAttribute("list");
 %>
-<body>
+<body class="container">
 	<h1>검색결과</h1>
-	<table border="1">
+	  <table class="table table-bordered table-striped">
 
 			<thead>
 				<tr>

@@ -68,25 +68,22 @@ public class LoginController extends HttpServlet {
 
 	//로그인 액션으로 간다.
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//로그인 되어있는 멤버면 리다이렉트
-		
-		
-		
+		//로그인 되어있는 멤버면    리다이렉트
+
 		//받은 id와 pw 가 유효한지 비교    rs.next가 없으면 로그인 실패  있으면 성공 
 		String memberId =  request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
 		Member member =new Member();
 		member.setMemberId(memberId);
 		member.setMemberPw(memberPw);
-		
-		
+
 		//모델 호출
 		MemberDao memberDao = new MemberDao();
 		String returnMemberId= memberDao.selectMemberByIdPw(member);
 		System.out.println(returnMemberId+" <---membercontroller");
 		if(returnMemberId ==null) {
 			//로그인 실패시 로그인 폼 재요청
-			response.sendRedirect(request.getContextPath()+"/LoginController");				  //sendRedirect -> get방식
+			response.sendRedirect(request.getContextPath()+"/LoginController");		  //sendRedirect -> get방식
 			return;
 		} 
 		//로그인 성공
